@@ -2,7 +2,7 @@
 
 # Creating AKS Cluster with Kafa cluster 
 
-usage() { echo "Usage: setup_cluster.sh -n <clusterName> -r <resourceGroupName> -l <location> -s <vmSize> "}
+usage() { echo "Usage: setup_cluster.sh -n <clusterName> -r <resourceGroupName> -l <location> -s <vmSize> " }
 
 declare clusterName=""
 declare resourceGroupName=""
@@ -47,37 +47,37 @@ echo "Node VM size   : $vmSize"
 
 echo "Creating Resource Group..."
 az group create -n $resourceGroupName -l $location
-if [[ $? != 0 ]]; then 
+if [ $? != 0 ]; then 
   exit 1
 fi
 
 echo "Creating AKS Cluster..."
 az aks create -n $clusterName -g $resourceGroupName -l $location  -s $vmSize --generate-ssh-keys 
-if [[ $? != 0 ]]; then 
+if [ $? != 0 ]; then 
   exit 1
 fi
 
 echo "Getting Credentials for AKS cluster..."
 az aks get-credentials --name $clusterName --resource-group $resourceGroupName
-if [[ $? != 0 ]]; then 
+if [ $? != 0 ]; then 
   exit 1
 fi
 
 # helm is already installed
 echo "Installing helm tiller..."
 helm init
-if [[ $? != 0 ]]; then 
+if [ $? != 0 ]; then 
   exit 1
 fi
 
 echo "Installing Kafka clsuter...."
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
-if [[ $? != 0 ]]; then 
+if [ $? != 0 ]; then 
   exit 1
 fi
 
 helm install --name my-kafka incubator/kafka --set replicas=1,prometheus.jmx.enabled=true,prometheus.kafka.enabled=true
-if [[ $? != 0 ]]; then 
+if [ $? != 0 ]; then 
   exit 1
 fi
 
