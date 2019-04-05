@@ -77,8 +77,8 @@ if [[ $? != 0 ]]; then
 fi
 
 helm install --name my-kafka incubator/kafka --set replicas=1,prometheus.jmx.enabled=true,prometheus.kafka.enabled=true
+if [[ $? != 0 ]]; then 
+  exit 1
+fi
 
-
-
-
-
+exit 0
