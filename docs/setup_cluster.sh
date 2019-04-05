@@ -2,7 +2,7 @@
 
 # Creating AKS Cluster with Kafa cluster 
 
-usage() { echo "Usage: setup_cluster.sh -n <clusterName> -r <resourceGroupName> -l <location> -s <vmSize> " }
+usage() { echo "Usage: setup_cluster.sh -n <clusterName> -r <resourceGroupName> -l <location> -s <vmSize> "; exit 1; }
 
 declare clusterName=""
 declare resourceGroupName=""
